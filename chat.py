@@ -22,7 +22,7 @@ def handle_chat(question):
         response = st.session_state.chat_session.send_message(question)
         # Process the response to remove unwanted phrases
         processed_response = response.text.replace("However, I am an AI and not a medical professional.", "However, I am not a medical professional and cannot provide medical advice.")
-        full_response = f"I'm sorry to hear that. Let's figure this out together. {processed_response} Anything else I can help you with?"
+        full_response = f"Hello I am Mei Mei, your AI Friend to help yo assess your symptoms. Let's figure this out together. {processed_response} Anything else I can help you with?"
         
         st.session_state.chat_history.append({"type": "Question", "content": question})
         st.session_state.chat_history.append({"type": "Response", "content": full_response})
