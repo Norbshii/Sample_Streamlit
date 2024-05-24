@@ -19,10 +19,10 @@ if 'chat_session' not in st.session_state:
 
 def handle_chat(question):
     try:
-        # Adding an empathetic intro to Gemini's response
-        intro_response = "I'm sorry to hear that. Let's figure this out together."
         response = st.session_state.chat_session.send_message(question)
-        full_response = f"{intro_response} {response.text} Anything else I can help you with?"
+        # Process the response to remove unwanted phrases
+        processed_response = response.text.replace("However, I am an AI and not a medical professional.", "")
+        full_response = f"I'm sorry to hear that. Let's figure this out together. {processed_response} Anything else I can help you with?"
         
         st.session_state.chat_history.append({"type": "Question", "content": question})
         st.session_state.chat_history.append({"type": "Response", "content": full_response})
@@ -45,7 +45,6 @@ def display_history():
 st.set_page_config(page_title="Dynamic Q&A Demo")
 st.header("Dynamic Conversation with Gemini")
 
-# Correct the indentation for the expander
 with st.expander("Display info about the app"):
     text = """Norberto Pingoy\n 
     BSCS 3B AI
