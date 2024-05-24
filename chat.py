@@ -11,7 +11,7 @@ if not API_KEY:
 
 genai.configure(api_key=API_KEY)
 
-# Initialize the chat session and history
+# Initialize the chat session and history if not already done
 if 'chat_session' not in st.session_state:
     model = genai.GenerativeModel('gemini-pro')
     st.session_state.chat_session = model.start_chat()
@@ -54,4 +54,4 @@ if st.button("Reset Conversation"):
     # Restart the chat session if needed and clear the history
     model = genai.GenerativeModel('gemini-pro')
     st.session_state.chat_session = model.start_chat()
-    st.session_state.chat_history = []
+    st.session_state.chat_history = []  # This clears the history
