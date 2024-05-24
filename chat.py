@@ -1,9 +1,8 @@
 # Q&A Chatbot using Gemini API
 
 import streamlit as st
+from dotenv import load_dotenv
 import os
-from dotenv 
-import load_dotenv
 import pathlib
 import textwrap
 
