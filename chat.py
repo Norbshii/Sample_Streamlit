@@ -1,13 +1,11 @@
 # Q&A Chatbot using Gemini API
 
 import streamlit as st
-from dotenv import load_dotenv
 import os
 import pathlib
 import textwrap
 
 import google.generativeai as genai
-load_dotenv()  # This loads the variables from .env into the environment
 
 # Load API key from environment variable (replace with your actual key)
 API_KEY = os.getenv("GOOGLE_API_KEY")
