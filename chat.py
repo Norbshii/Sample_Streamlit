@@ -59,7 +59,7 @@ with st.expander("How to use the chatbot"):
     text = """Welcome to the Dynamic Conversation with Gemini! This chatbot is designed to provide general health information and guide you through basic inquiries about symptoms, health conditions, and wellness advice. Follow these simple steps to interact with the chatbot:
 
 1. **Starting Up**\n
-When you first launch the application, you will see a text input field labeled "Enter your general health inquiry here:". This is where you will type your questions.
+When you first launch the application, you will see a text input field labeled "Enter your general health inquiry here:". This is where you will type your questions.\n
 2. **Entering Your Inquiry**\n
 Type your question in the text box. Try to keep your questions **general and focused on symptoms or health conditions.** For example, instead of saying "I feel sick," you could ask, "What are some common causes of nausea and fatigue?"
 Press the **"Ask Gemini"** button to submit your question.
