@@ -19,10 +19,14 @@ if 'chat_session' not in st.session_state:
 
 def handle_chat(question):
     try:
+        # Adding an empathetic intro to Gemini's response
+        intro_response = "I'm sorry to hear that. Let's figure this out together."
         response = st.session_state.chat_session.send_message(question)
+        full_response = f"{intro_response} {response.text} Anything else I can help you with?"
+        
         st.session_state.chat_history.append({"type": "Question", "content": question})
-        st.session_state.chat_history.append({"type": "Response", "content": response.text})
-        return response.text
+        st.session_state.chat_history.append({"type": "Response", "content": full_response})
+        return full_response
     except Exception as e:
         st.error(f"An error occurred: {str(e)}")
         time.sleep(1)  # Simple backoff
@@ -34,6 +38,7 @@ def display_history():
             if entry['type'] == "Question":
                 st.markdown(f"<p style='font-size:16px; font-weight:bold;'>You said:</p><p style='font-size:16px;'>{entry['content']}</p>", unsafe_allow_html=True)
             elif entry['type'] == "Response":
+                # Format response with HTML to display
                 formatted_response = entry['content'].replace("**", "<b>").replace("<b>", "</b>")
                 st.markdown(f"<p style='font-size:16px; font-weight:bold;'>Gemini replied:</p><p style='font-size:16px;'>{formatted_response}</p>", unsafe_allow_html=True)
 
@@ -41,7 +46,7 @@ def display_history():
 st.set_page_config(page_title="Dynamic Q&A Demo")
 st.header("Dynamic Conversation with Gemini")
 
-# Correct the indentation for the expander
+# Display info about the app in an expander
 with st.expander("Display info about the app"):
     text = """Norberto Pingoy\n 
     BSCS 3B AI
