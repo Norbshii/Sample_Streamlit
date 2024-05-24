@@ -20,7 +20,7 @@ if 'chat_session' not in st.session_state:
 def handle_chat(question):
     try:
         # Adding an empathetic intro to Gemini's response
-        intro_response = "Hello I am Mei Mei, your AI Friend to help yo assess your symptoms. Let's figure this out together."
+        intro_response = "I'm sorry to hear that. Let's figure this out together."
         response = st.session_state.chat_session.send_message(question)
         full_response = f"{intro_response} {response.text} Anything else I can help you with?"
         
@@ -45,25 +45,16 @@ def display_history():
 st.set_page_config(page_title="Dynamic Q&A Demo")
 st.header("Dynamic Conversation with Gemini")
 
-# Correct the indentation for the expander
-with st.expander("Display info about the app"):
-    text = """Norberto Pingoy\n 
-    BSCS 3B AI
-    CCS 229 - Intelligent Systems
-    Department of Computer Science
-    College of Information and Communications Technology
-    West Visayas State University
-    """
-    st.write(text)
-
-user_input = st.text_input("Your Question:", key="user_query")
-
+# Input and interaction area
+user_input = st.text_input("Enter your general health inquiry here:", key="user_query")
 if st.button("Ask Gemini"):
     if user_input:
-        response_text = handle_chat(user_input)
+        # Example of refining the user's query to be more general if needed
+        refined_query = f"What are some common reasons for {user_input}?"
+        response_text = handle_chat(refined_query)
         display_history()
     else:
-        st.warning("Please enter a question.")
+        st.warning("Please enter your query about general health information.")
 
 if st.button("Reset Conversation"):
     # Restart the chat session if needed and clear the history
