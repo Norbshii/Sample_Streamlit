@@ -46,6 +46,12 @@ def display_history():
 
 # Streamlit App setup
 st.set_page_config(page_title="Dynamic Q&A Demo")
+st.markdown("""
+<style>
+h1 { font-size: 24px; } /* Adjust header size */
+h2 { font-size: 20px; } /* Make smaller headers */
+</style>
+""", unsafe_allow_html=True)
 st.header("Dynamic Conversation with Gemini")
 
 user_input = st.text_input("Your Question:", key="user_query")
