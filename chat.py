@@ -38,7 +38,8 @@ def display_history():
         if entry['type'] == "Question":
             st.markdown(f"<p style='font-size:16px; font-weight:bold;'>You said:</p><p style='font-size:16px;'>{entry['content']}</p>", unsafe_allow_html=True)
         elif entry['type'] == "Response":
-            st.markdown(f"<p style='font-size:16px; font-weight:bold;'>Gemini replied:</p><p style='font-size:16px;'>{entry['content']}</p>", unsafe_allow_html=True)
+            formatted_response = entry['content'].replace("**", "<b>").replace("<b>", "</b>")
+            st.markdown(f"<p style='font-size:16px; font-weight:bold;'>Gemini replied:</p><p style='font-size:16px;'>{formatted_response}</p>", unsafe_allow_html=True)
 
     if len(st.session_state.chat_history) > end_idx:
         if st.button('Show More'):
@@ -46,7 +47,6 @@ def display_history():
 
 # Streamlit App setup
 st.set_page_config(page_title="Dynamic Q&A Demo")
-st.markdown(""" <style> h1 { font-size: 24px; }/* Adjust header size */ h2 { font-size: 20px; } /* Make smaller headers */</style> """, unsafe_allow_html=True)
 st.header("Dynamic Conversation with Gemini")
 
 user_input = st.text_input("Your Question:", key="user_query")
