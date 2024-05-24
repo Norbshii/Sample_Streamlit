@@ -1,6 +1,5 @@
 import streamlit as st
 import os
-import textwrap
 import google.generativeai as genai
 
 # Load API key from environment variable
@@ -11,27 +10,20 @@ if not API_KEY:
 
 genai.configure(api_key=API_KEY)
 
-# Function to interact with Gemini
-def get_gemini_response(question):
+# Initialize the chat session
+if 'chat_session' not in st.session_state:
     model = genai.GenerativeModel('gemini-pro')
-    
-    # Ensure chat_history is structured correctly
-    if 'chat_history' not in st.session_state or not st.session_state['chat_history']:
-        st.session_state['chat_history'] = model.start_chat()
+    st.session_state.chat_session = model.start_chat()
 
+# Function to handle chat interaction
+def handle_chat(question):
     try:
-        # Update the history with the user's question
-        st.session_state['chat_history'].send_message({"text": question})
-        
-        # Get the response from Gemini
-        response = st.session_state['chat_history'].get_next_response()
-        
-        # Display the response and update the history
-        st.session_state['chat_history'].append({"gemini": response.text})
+        # Send the user's question to Gemini and fetch the response
+        response = st.session_state.chat_session.send_message(question)
         return response
     except Exception as e:
         st.error(f"An error occurred: {str(e)}")
-        return []
+        return None
 
 # Streamlit App setup
 st.set_page_config(page_title="Dynamic Q&A Demo")
@@ -41,16 +33,14 @@ user_input = st.text_input("Your Question:", key="user_query")
 
 if st.button("Ask Gemini"):
     if user_input:
-        responses = get_gemini_response(user_input)
-        st.subheader("Conversation:")
-        for entry in st.session_state.chat_history:
-            if 'user' in entry:
-                st.write(f"You: {entry['user']}")
-            if 'gemini' in entry:
-                st.write(f"Gemini: {entry['gemini']}")
+        response = handle_chat(user_input)
+        if response:
+            st.subheader("Gemini's Response:")
+            st.write(response.text)  # Assuming 'text' is the correct attribute; adjust as per the actual response structure
     else:
         st.warning("Please enter a question.")
 
 if st.button("Reset Conversation"):
-    st.session_state.chat_history = []
-
+    # Restart the chat session if needed
+    model = genai.GenerativeModel('gemini-pro')
+    st.session_state.chat_session = model.start_chat()
