@@ -36,8 +36,10 @@ if st.button("Ask"):
         response = get_gemini_response(user_input, st.session_state.chat)
         st.subheader("Gemini's Response:")
         for chunk in response:
-            st.write(textwrap.fill(chunk.text))
-        # Correct attribute access depending on actual structure
-        st.write("Chat History:", [message.get_text() for message in st.session_state.chat.history])
-    else:
-        st.warning("Please enter a question.")
+            st.write(dir(chunk))  # Debug: print all available properties of the chunk
+            # Attempt to find and display the correct content field
+            st.write(textwrap.fill(str(chunk)))  # Display the raw response structure
+        # Debugging chat history
+        if hasattr(st.session_state.chat, 'history'):
+            for message in st.session_state.chat.history:
+                st.write(dir(message))  # Print all properties of a message
