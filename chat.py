@@ -36,9 +36,9 @@ def display_history():
 
     for entry in paginated_history:
         if entry['type'] == "Question":
-            st.markdown(f"<h2 style='font-weight:bold;'>You said:</h2>{entry['content']}", unsafe_allow_html=True)
+            st.markdown(f"<p style='font-weight:bold;'>You said:</p>{entry['content']}", unsafe_allow_html=True)
         elif entry['type'] == "Response":
-            st.markdown(f"<h2 style='font-weight:bold;'>Gemini replied:</h2>{entry['content']}", unsafe_allow_html=True)
+            st.markdown(f"<p style='font-weight:bold;'>Gemini replied:</p>{entry['content']}", unsafe_allow_html=True)
 
     if len(st.session_state.chat_history) > end_idx:
         if st.button('Show More'):
