@@ -29,12 +29,6 @@ def handle_chat(question):
         st.error(f"An error occurred: {str(e)}")
         return None
 
-def calculate_height(text):
-    # Basic calculation: one line per 80 characters, and then some padding
-    lines = text.count('\n') + 1
-    lines += len(text) // 80  # rough estimate of line breaks for long lines
-    return max(3, lines) * 20  # 20 pixels per line as a rough estimate
-
 # Streamlit App setup
 st.set_page_config(page_title="Dynamic Q&A Demo")
 st.header("Dynamic Conversation with Gemini")
@@ -47,11 +41,16 @@ if st.button("Ask Gemini"):
         if response_text:
             st.subheader("Conversation History:")
             for entry in st.session_state.chat_history:
-                height = calculate_height(entry['content'])
                 if entry['type'] == "Question":
-                    st.text_area("You said:", value=entry['content'], height=height, disabled=True)
+                    st.markdown("You said:")
+                    st.markdown(f"> {entry['content']}")
                 elif entry['type'] == "Response":
-                    st.text_area("Gemini replied:", value=entry['content'], height=height, disabled=True)
+                    # Check if response is an image or text
+                    if entry['content'].startswith("http"):  # A simple way to check if it's an URL
+                        st.image(entry['content'], caption="Gemini's Image Response")
+                    else:
+                        st.markdown("Gemini replied:")
+                        st.markdown(entry['content'], unsafe_allow_html=True)  # Allow HTML if the text is formatted
     else:
         st.warning("Please enter a question.")
 
