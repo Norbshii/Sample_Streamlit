@@ -13,7 +13,7 @@ genai.configure(api_key=API_KEY)
 
 # Initialize the chat session and history
 if 'chat_session' not in st.session_state:
-    model = genai.GenerativeModel('gemini-1.5-pro-latest')
+    model = genai.GenerativeModel('gemini-pro')
     st.session_state.chat_session = model.start_chat()
     st.session_state.chat_history = []  # Initialize chat history
 
@@ -46,10 +46,7 @@ def display_history():
 
 # Streamlit App setup
 st.set_page_config(page_title="Dynamic Q&A Demo")
-st.markdown(<style>
-h1 { font-size: 24px; } /* Adjust header size */
-h2 { font-size: 20px; } /* Make smaller headers */
-</style>, unsafe_allow_html=True)
+st.markdown(""" <style> h1 { font-size: 24px; }/* Adjust header size */ h2 { font-size: 20px; } /* Make smaller headers */</style> """, unsafe_allow_html=True)
 st.header("Dynamic Conversation with Gemini")
 
 user_input = st.text_input("Your Question:", key="user_query")
@@ -63,7 +60,7 @@ if st.button("Ask Gemini"):
 
 if st.button("Reset Conversation"):
     # Restart the chat session if needed and clear the history
-    model = genai.GenerativeModel('gemini-1.5-pro-latest')
+    model = genai.GenerativeModel('gemini-pro')
     st.session_state.chat_session = model.start_chat()
     st.session_state.chat_history = []
     st.session_state.start_idx = 0  # Reset pagination
