@@ -11,38 +11,41 @@ if not API_KEY:
 
 genai.configure(api_key=API_KEY)
 
-## Function to interact with Gemini
+# Initialize or retrieve chat history
+if 'chat_history' not in st.session_state:
+    st.session_state.chat_history = []
+
+## Function to interact with Gemini and maintain conversation
 def get_gemini_response(question):
-  model = genai.GenerativeModel('gemini-pro')
-  chat = model.start_chat(history=[])
-  response = chat.send_message(question, stream=True)
-  return response
+    model = genai.GenerativeModel('gemini-pro')
+    chat = model.start_chat(st.session_state.chat_history)
+    response = chat.send_message(question)
+    st.session_state.chat_history.append({"user": question})
+    for chunk in response:
+        st.session_state.chat_history.append({"gemini": chunk.text})
+    return response
 
 ## Streamlit App
-st.set_page_config(page_title="Q&A Demo")
-st.header("Ask Gemini!")
+st.set_page_config(page_title="Dynamic Q&A Demo")
+st.header("Dynamic Conversation with Gemini")
 
-# First level of input
-user_input_level1 = st.text_input("Your initial question:", key="level1")
+user_input = st.text_input("Your Question:", key="user_query")
 
-if st.button("Refine Question"):
-    # Store first level input and ask for refinement
-    st.session_state['level1_input'] = user_input_level1
-    st.session_state['refinement_prompt'] = True
+if st.button("Ask Gemini"):
+    if user_input:
+        responses = get_gemini_response(user_input)
+        st.subheader("Conversation:")
+        for entry in st.session_state.chat_history:
+            if 'user' in entry:
+                st.write(f"You: {entry['user']}")
+            if 'gemini' in entry:
+                st.write(f"Gemini: {entry['gemini']}")
+    else:
+        st.warning("Please enter a question.")
 
-if 'refinement_prompt' in st.session_state and st.session_state['refinement_prompt']:
-    st.subheader("Refine your question:")
-    user_input_level2 = st.text_input("Your refined question:", key="level2", value=st.session_state['level1_input'])
-    if st.button("Submit Final Question"):
-        final_question = user_input_level2
-        response = get_gemini_response(final_question)
-        st.subheader("Gemini's Response:")
-        for chunk in response:
-            st.write(textwrap.fill(chunk.text))
-        # Reset the state after submission
-        st.session_state['refinement_prompt'] = False
-else:
-    st.warning("Please enter your initial question.")
+# Optionally, add a reset conversation button
+if st.button("Reset Conversation"):
+    st.session_state.chat_history = []
 
-# Print chat history for debugging purposes (optional)
-# st.write("Chat History:", chat.history)
+# Debug: Print chat history
+# st.write("Chat History:", st.session_state.chat_history)
