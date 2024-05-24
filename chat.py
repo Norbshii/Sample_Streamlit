@@ -1,8 +1,8 @@
 import streamlit as st
 import os
+import time
 import google.generativeai as genai
 
-# Load API key from environment variable
 API_KEY = os.getenv("GOOGLE_API_KEY")
 if not API_KEY:
     st.error("Please set the GOOGLE_API_KEY environment variable with your Gemini API key.")
@@ -10,53 +10,24 @@ if not API_KEY:
 
 genai.configure(api_key=API_KEY)
 
-# Initialize the chat session and history
-if 'chat_session' not in st.session_state:
-    model = genai.GenerativeModel('gemini-pro')
-    st.session_state.chat_session = model.start_chat()
-    st.session_state.chat_history = []  # Initialize chat history
-
-# Function to handle chat interaction
 def handle_chat(question):
-    try:
-        # Send the user's question to Gemini and fetch the response
-        response = st.session_state.chat_session.send_message(question)
-        # Store the question and response in the history
-        st.session_state.chat_history.append({"type": "Question", "content": question})
-        st.session_state.chat_history.append({"type": "Response", "content": response.text})
-        return response.text
-    except Exception as e:
-        st.error(f"An error occurred: {str(e)}")
-        return None
-
-# Streamlit App setup
-st.set_page_config(page_title="Dynamic Q&A Demo")
-st.header("Dynamic Conversation with Gemini")
+    model = genai.GenerativeModel('gemini-pro')
+    session = model.start_chat()
+    retry_count = 0
+    while retry_count < 3:
+        try:
+            response = session.send_message(question)
+            return response.text
+        except Exception as e:
+            st.error(f"An error occurred: {str(e)}")
+            time.sleep(1)  # Wait for a second before retrying
+            retry_count += 1
+    return None
 
 user_input = st.text_input("Your Question:", key="user_query")
-
-if st.button("Ask Gemini"):
-    if user_input:
-        response_text = handle_chat(user_input)
-        if response_text:
-            st.subheader("Conversation History:")
-            for entry in st.session_state.chat_history:
-                if entry['type'] == "Question":
-                    st.markdown("You said:")
-                    st.markdown(f"> {entry['content']}")
-                elif entry['type'] == "Response":
-                    # Check if response is an image or text
-                    if entry['content'].startswith("http"):  # A simple way to check if it's an URL
-                        st.image(entry['content'], caption="Gemini's Image Response")
-                    else:
-                        st.markdown("Gemini replied:")
-                        st.markdown(entry['content'], unsafe_allow_html=True)  # Allow HTML if the text is formatted
+if st.button("Ask Gemini") and user_input:
+    response_text = handle_chat(user_input)
+    if response_text:
+        st.write(response_text)
     else:
-        st.warning("Please enter a question.")
-
-if st.button("Reset Conversation"):
-    # Restart the chat session if needed and clear the history
-    model = genai.GenerativeModel('gemini-pro')
-    st.session_state.chat_session = model.start_chat()
-    st.session_state.chat_history = []
-
+        st.write("Failed to get a response after several attempts.")
