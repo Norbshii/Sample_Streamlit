@@ -61,7 +61,7 @@ with st.expander("How to use the chatbot"):
 1. Starting Up
 When you first launch the application, you will see a text input field labeled "Enter your general health inquiry here:". This is where you will type your questions.
 2. Entering Your Inquiry
-Type your question in the text box. Try to keep your questions<span class="bolded">general and focused on symptoms or health conditions.</span> For example, instead of saying "I feel sick," you could ask, "What are some common causes of nausea and fatigue?"
+Type your question in the text box. Try to keep your questions <b>general and focused on symptoms or health conditions.</b> For example, instead of saying "I feel sick," you could ask, "What are some common causes of nausea and fatigue?"
 Press the "Ask Gemini" button to submit your question.
 3. Viewing Responses
 After submitting your question, the chatbot will process your input and provide a response below the input field.
