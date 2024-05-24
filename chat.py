@@ -38,7 +38,6 @@ def display_history():
             if entry['type'] == "Question":
                 st.markdown(f"<p style='font-size:16px; font-weight:bold;'>You said:</p><p style='font-size:16px;'>{entry['content']}</p>", unsafe_allow_html=True)
             elif entry['type'] == "Response":
-                # Format response with HTML to display
                 formatted_response = entry['content'].replace("**", "<b>").replace("<b>", "</b>")
                 st.markdown(f"<p style='font-size:16px; font-weight:bold;'>Gemini replied:</p><p style='font-size:16px;'>{formatted_response}</p>", unsafe_allow_html=True)
 
@@ -46,7 +45,7 @@ def display_history():
 st.set_page_config(page_title="Dynamic Q&A Demo")
 st.header("Dynamic Conversation with Gemini")
 
-# Display info about the app in an expander
+# Correct the indentation for the expander
 with st.expander("Display info about the app"):
     text = """Norberto Pingoy\n 
     BSCS 3B AI
