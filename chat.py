@@ -20,7 +20,7 @@ if 'chat_session' not in st.session_state:
 def handle_chat(question):
     try:
         # Adding an empathetic intro to Gemini's response
-        intro_response = "I'm sorry to hear that. Let's figure this out together."
+        intro_response = "Hello I am Mei Mei, your AI Friend to help yo assess your symptoms. Let's figure this out together."
         response = st.session_state.chat_session.send_message(question)
         full_response = f"{intro_response} {response.text} Anything else I can help you with?"
         
