@@ -72,7 +72,7 @@ Each new and previous conversation will be displayed in a scrollable container, 
 5. **Resetting the Conversation**
 If you wish to start over and clear all previous conversations, you can press the "Reset Conversation" button. This will clear all history and allow you to start fresh.
     """
-    st.markabout(text, unsafe_allow_html=True)
+    st.markdown(text, unsafe_allow_html=True)
 # Input and interaction area
 user_input = st.text_input("Enter your general health inquiry here:", key="user_query")
 if st.button("Ask Gemini"):
