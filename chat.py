@@ -45,6 +45,17 @@ def display_history():
 st.set_page_config(page_title="Symptoms and Remedies Chatbot")
 st.header("Symptom Assessment and Renedies AI")
 
+# Expander containing information about the creator
+with st.expander("Display info about the app"):
+    text = """Norberto Pingoy\n
+    BSCS 3B AI
+    CCS 229 - Intelligent Systems
+    Department of Computer Science
+    College of Information and Communications Technology
+    West Visayas State University
+    """
+    st.write(text)
+    
 # Input and interaction area
 user_input = st.text_input("Enter your general health inquiry here:", key="user_query")
 if st.button("Ask Gemini"):
