@@ -40,15 +40,18 @@ def display_history():
 # Streamlit App setup
 st.set_page_config(page_title="Dynamic Q&A Demo")
 st.header("Dynamic Conversation with Gemini")
- with st.expander("Display info about the app"):        
-        text = """Norberto Pingoy\n
-        BSCS 3B AI
-        CCS 229 - Intelligent Systems
-        Department of Computer Science
-        College of Information and Communications Technology
-        West Visayas State University
-        """
-        st.write(text)
+
+# Correct the indentation for the expander
+with st.expander("Display info about the app"):
+    text = """Norberto Pingoy\n
+    BSCS 3B AI
+    CCS 229 - Intelligent Systems
+    Department of Computer Science
+    College of Information and Communications Technology
+    West Visayas State University
+    """
+    st.write(text)
+
 user_input = st.text_input("Your Question:", key="user_query")
 
 if st.button("Ask Gemini"):
