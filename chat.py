@@ -1,6 +1,7 @@
 import streamlit as st
 import os
 import google.generativeai as genai
+import time
 
 # Load API key from environment variable
 API_KEY = os.getenv("GOOGLE_API_KEY")
@@ -16,18 +17,32 @@ if 'chat_session' not in st.session_state:
     st.session_state.chat_session = model.start_chat()
     st.session_state.chat_history = []  # Initialize chat history
 
-# Function to handle chat interaction
 def handle_chat(question):
     try:
-        # Send the user's question to Gemini and fetch the response
         response = st.session_state.chat_session.send_message(question)
-        # Store the question and response in the history
         st.session_state.chat_history.append({"type": "Question", "content": question})
         st.session_state.chat_history.append({"type": "Response", "content": response.text})
         return response.text
     except Exception as e:
         st.error(f"An error occurred: {str(e)}")
-        return None
+        time.sleep(1)  # Simple backoff
+        return "An error occurred. Please try again."
+
+# Pagination function to handle large outputs
+def display_history():
+    start_idx = st.session_state.get('start_idx', 0)
+    end_idx = start_idx + 5  # Show 5 entries at a time
+    paginated_history = st.session_state.chat_history[start_idx:end_idx]
+
+    for entry in paginated_history:
+        if entry['type'] == "Question":
+            st.markdown(f"<h2 style='font-weight:bold;'>You said:</h2>{entry['content']}", unsafe_allow_html=True)
+        elif entry['type'] == "Response":
+            st.markdown(f"<h2 style='font-weight:bold;'>Gemini replied:</h2>{entry['content']}", unsafe_allow_html=True)
+
+    if len(st.session_state.chat_history) > end_idx:
+        if st.button('Show More'):
+            st.session_state['start_idx'] = end_idx
 
 # Streamlit App setup
 st.set_page_config(page_title="Dynamic Q&A Demo")
@@ -38,13 +53,7 @@ user_input = st.text_input("Your Question:", key="user_query")
 if st.button("Ask Gemini"):
     if user_input:
         response_text = handle_chat(user_input)
-        if response_text:
-            st.subheader("Conversation History:")
-            for entry in st.session_state.chat_history:
-                if entry['type'] == "Question":
-                    st.markdown(f"<h2 style='font-weight:bold;'>You said:</h2>{entry['content']}", unsafe_allow_html=True)
-                elif entry['type'] == "Response":
-                    st.markdown(f"<h2 style='font-weight:bold;'>Gemini replied:</h2>{entry['content']}", unsafe_allow_html=True)
+        display_history()
     else:
         st.warning("Please enter a question.")
 
@@ -53,3 +62,5 @@ if st.button("Reset Conversation"):
     model = genai.GenerativeModel('gemini-pro')
     st.session_state.chat_session = model.start_chat()
     st.session_state.chat_history = []
+    st.session_state.start_idx = 0  # Reset pagination
+
