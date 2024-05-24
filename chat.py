@@ -28,22 +28,14 @@ def handle_chat(question):
         time.sleep(1)  # Simple backoff
         return "An error occurred. Please try again."
 
-# Pagination function to handle large outputs
 def display_history():
-    start_idx = st.session_state.get('start_idx', 0)
-    end_idx = start_idx + 5  # Show 5 entries at a time
-    paginated_history = st.session_state.chat_history[start_idx:end_idx]
-
-    for entry in paginated_history:
-        if entry['type'] == "Question":
-            st.markdown(f"<p style='font-size:16px; font-weight:bold;'>You said:</p><p style='font-size:16px;'>{entry['content']}</p>", unsafe_allow_html=True)
-        elif entry['type'] == "Response":
-            formatted_response = entry['content'].replace("**", "<b>").replace("<b>", "</b>")
-            st.markdown(f"<p style='font-size:16px; font-weight:bold;'>Gemini replied:</p><p style='font-size:16px;'>{formatted_response}</p>", unsafe_allow_html=True)
-
-    if len(st.session_state.chat_history) > end_idx:
-        if st.button('Show More'):
-            st.session_state['start_idx'] = end_idx
+    with st.container():  # Use a container to make the history scrollable
+        for entry in st.session_state.chat_history:
+            if entry['type'] == "Question":
+                st.markdown(f"<p style='font-size:16px; font-weight:bold;'>You said:</p><p style='font-size:16px;'>{entry['content']}</p>", unsafe_allow_html=True)
+            elif entry['type'] == "Response":
+                formatted_response = entry['content'].replace("**", "<b>").replace("<b>", "</b>")
+                st.markdown(f"<p style='font-size:16px; font-weight:bold;'>Gemini replied:</p><p style='font-size:16px;'>{formatted_response}</p>", unsafe_allow_html=True)
 
 # Streamlit App setup
 st.set_page_config(page_title="Dynamic Q&A Demo")
@@ -63,4 +55,3 @@ if st.button("Reset Conversation"):
     model = genai.GenerativeModel('gemini-pro')
     st.session_state.chat_session = model.start_chat()
     st.session_state.chat_history = []
-    st.session_state.start_idx = 0  # Reset pagination
