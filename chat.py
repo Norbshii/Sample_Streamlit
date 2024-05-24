@@ -43,8 +43,8 @@ st.header("Dynamic Conversation with Gemini")
 
 # Correct the indentation for the expander
 with st.expander("Display info about the app"):
-    text = """Norberto Pingoy\n
-    BSCS 3B AI
+    text = """Norberto Pingoy
+    BSCS 3B AI\n
     CCS 229 - Intelligent Systems
     Department of Computer Science
     College of Information and Communications Technology
