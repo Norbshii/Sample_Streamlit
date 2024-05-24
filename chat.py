@@ -37,7 +37,7 @@ if st.button("Ask"):
         st.subheader("Gemini's Response:")
         for chunk in response:
             st.write(textwrap.fill(chunk.text))
-        # Optionally display the chat history in the session for debugging
-        st.write("Chat History:", [message.text for message in st.session_state.chat.history])
+        # Correct attribute access depending on actual structure
+        st.write("Chat History:", [message.get_text() for message in st.session_state.chat.history])
     else:
         st.warning("Please enter a question.")
