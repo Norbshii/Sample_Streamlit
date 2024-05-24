@@ -42,9 +42,9 @@ if st.button("Ask Gemini"):
             st.subheader("Conversation History:")
             for entry in st.session_state.chat_history:
                 if entry['type'] == "Question":
-                    st.markdown(f"**You said:** {entry['content']}")
+                    st.markdown(f"<h3 style='font-weight:bold;'>You said:</h3>{entry['content']}", unsafe_allow_html=True)
                 elif entry['type'] == "Response":
-                    st.markdown(f"**Gemini replied:** {entry['content']}")
+                    st.markdown(f"<h3 style='font-weight:bold;'>Gemini replied:</h3>{entry['content']}", unsafe_allow_html=True)
     else:
         st.warning("Please enter a question.")
 
