@@ -15,19 +15,19 @@ genai.configure(api_key=API_KEY)
 def get_gemini_response(question):
     model = genai.GenerativeModel('gemini-pro')
     
-    # Ensure chat_history is formatted correctly for Gemini
-    if 'chat_history' not in st.session_state:
-        st.session_state['chat_history'] = []
-    
+    # Ensure chat_history is structured correctly
+    if 'chat_history' not in st.session_state or not st.session_state['chat_history']:
+        st.session_state['chat_history'] = model.start_chat()
+
     try:
-        # Starting a chat session with the current history
-        chat = model.start_chat(history=st.session_state['chat_history'])
-        response = chat.send_message(question)
+        # Update the history with the user's question
+        st.session_state['chat_history'].send_message({"text": question})
         
-        # Update the session state with the new exchanges
-        st.session_state['chat_history'].append({"user": question})
-        for chunk in response:
-            st.session_state['chat_history'].append({"gemini": chunk.text})
+        # Get the response from Gemini
+        response = st.session_state['chat_history'].get_next_response()
+        
+        # Display the response and update the history
+        st.session_state['chat_history'].append({"gemini": response.text})
         return response
     except Exception as e:
         st.error(f"An error occurred: {str(e)}")
