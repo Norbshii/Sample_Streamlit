@@ -13,7 +13,7 @@ genai.configure(api_key=API_KEY)
 
 # Initialize the chat session and history
 if 'chat_session' not in st.session_state:
-    model = genai.GenerativeModel('gemini-pro')
+    model = genai.GenerativeModel('gemini-1.5-pro-latest')
     st.session_state.chat_session = model.start_chat()
     st.session_state.chat_history = []  # Initialize chat history
 
