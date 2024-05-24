@@ -42,8 +42,8 @@ def display_history():
                 st.markdown(f"<p style='font-size:16px; font-weight:bold;'>Gemini replied:</p><p style='font-size:16px;'>{formatted_response}</p>", unsafe_allow_html=True)
 
 # Streamlit App setup
-st.set_page_config(page_title="Dynamic Q&A Demo")
-st.header("Dynamic Conversation with Gemini")
+st.set_page_config(page_title="Symptoms and Remedies Chatbot")
+st.header("Symptom Assessment and Renedies AI")
 
 # Input and interaction area
 user_input = st.text_input("Enter your general health inquiry here:", key="user_query")
