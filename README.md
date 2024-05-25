@@ -32,7 +32,7 @@ The SARBOT is a Streamlit-based chatbot designed to provide users with general h
    ```plaintext
    GOOGLE_API_KEY='MyAPIisHiddenInTheSecrets'
    ```
-### You can also skip the installation and Directly use the streamlit application via this [Link](https://sampleapp-ad7jx2ptscwwg8uspcrqia.streamlit.app/#perform-the-calculation-based-on-the-operator) \n
+### You can also skip the installation and Directly use the streamlit application via this [Link](https://sampleapp-ad7jx2ptscwwg8uspcrqia.streamlit.app/#perform-the-calculation-based-on-the-operator)
 
 ### Running the Application
 Execute the following command in the terminal:
