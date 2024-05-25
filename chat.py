@@ -1,3 +1,4 @@
+# NAME: NORBERTO PINGOY            COURSE & SECTION: BSCS 3B AI        FINAL PROJECT FOR CCS 229 - INTELLIGENT SYSTEMS
 import streamlit as st
 import os
 import google.generativeai as genai
@@ -6,12 +7,14 @@ import time
 # Load API key from environment variable
 API_KEY = os.getenv("GOOGLE_API_KEY")
 if not API_KEY:
+    # Displays an error on the Streamlit interface if the API key is not set.
     st.error("Please set the GOOGLE_API_KEY environment variable with your Gemini API key.")
     exit()
 
+# Configures the Gemini API with the obtained API key.
 genai.configure(api_key=API_KEY)
 
-# Initialize the chat session and history if not already done
+# Check if a chat session exists, if not, initialize a new one.
 if 'chat_session' not in st.session_state:
     model = genai.GenerativeModel('gemini-1.5-pro')
     st.session_state.chat_session = model.start_chat()
@@ -19,25 +22,31 @@ if 'chat_session' not in st.session_state:
 
 def handle_chat(question):
     try:
-        # Adding an empathetic intro to Gemini's response
+         # An introduction to the response to make it more engaging and user friendly.
         intro_response = "Hello I am Mei Mei, your chatbot AI Friend to help you assess your symptoms. Let's figure this out together."
+        # Sends the user's question to the chat API and gets a response.
         response = st.session_state.chat_session.send_message(question)
+        # Formulates the complete response by combining the introduction, API response, and a follow-up prompt.
         full_response = f"{intro_response} {response.text} Anything else I can help you with?"
-        
+
+        # Appends the question and response to the session's history for display.
         st.session_state.chat_history.append({"type": "Question", "content": question})
         st.session_state.chat_history.append({"type": "Response", "content": full_response})
         return full_response
     except Exception as e:
+        # Handles exceptions by displaying an error message and returning a fallback message.
         st.error(f"An error occurred: {str(e)}")
-        time.sleep(1)  # Simple backoff
+        time.sleep(1)  # Introduces a slight delay before responding, simulating thought.
         return "An error occurred. Please try again."
 
 def display_history():
-    with st.container():  # Use a container to make the history scrollable
+    with st.container():  # Creates a scrollable container to display the chat history.
         for entry in st.session_state.chat_history:
+                # Formats and Displays user inquiries.
             if entry['type'] == "Question":
                 st.markdown(f"<p style='font-size:16px; font-weight:bold;'>Your Inquiry:</p><p style='font-size:16px;'>{entry['content']}</p>", unsafe_allow_html=True)
             elif entry['type'] == "Response":
+                # Formats and Displays responses from the chatbot.
                 formatted_response = entry['content'].replace("**", "<b>").replace("<b>", "</b>")
                 st.markdown(f"<p style='font-size:16px; font-weight:bold;'>Response from Mei Mei:</p><p style='font-size:16px;'>{formatted_response}</p>", unsafe_allow_html=True)
 
@@ -49,12 +58,13 @@ st.header("SARBOT - Symptom Assessment and Remedies Bot")
 with st.expander("Display info about the creator"):
     text = """Norberto Pingoy\n
     BSCS 3B AI
-    CCS 229 - Intelligent Systems
-    Department of Computer Science
+    Final Project for CCS 229 - Intelligent Systems
+    Bachelor of Science in Computer Science
     College of Information and Communications Technology
     West Visayas State University
     """
     st.write(text)
+# Detailed guide on how to interact with the SARBOT - Mei Mei
 with st.expander("How to use the SARBOT"):
     text = """Welcome to the SARBOT - Symptoms and Remedies Chatbot, Mei Mei will be your AI friend while using this chat! This chatbot is designed to provide general health information and guide you through basic inquiries about symptoms, health conditions, and wellness advice. Follow these simple steps to interact with the chatbot:
 
@@ -74,7 +84,7 @@ If you wish to start over and clear all previous conversations, you can press th
     """
     st.markdown(text, unsafe_allow_html=True)
 
-# Input and interaction area
+# Main interaction area where users can input their queries.
 user_input = st.text_input("Enter your general health inquiry here:", key="user_query")
 if st.button("Ask Mei Mei"):
     if user_input:
@@ -89,8 +99,8 @@ if st.button("Ask Mei Mei"):
     else:
         st.warning("Please enter your query about general health information.")
 
+# Button to reset the conversation, clearing all history and starting a new session.
 if st.button("Reset Conversation"):
-    # Restart the chat session if needed and clear the history
     model = genai.GenerativeModel('gemini-1.5-pro')
     st.session_state.chat_session = model.start_chat()
     st.session_state.chat_history = []  # This clears the history
