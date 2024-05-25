@@ -20,7 +20,7 @@ if 'chat_session' not in st.session_state:
 def handle_chat(question):
     try:
         # Adding an empathetic intro to Gemini's response
-        intro_response = "Hello I am Mei Mei, your chatbot AI Friend to help yo assess your symptoms. Let's figure this out together."
+        intro_response = "Hello I am Mei Mei, your chatbot AI Friend to help you assess your symptoms. Let's figure this out together."
         response = st.session_state.chat_session.send_message(question)
         full_response = f"{intro_response} {response.text} Anything else I can help you with?"
         
@@ -36,10 +36,10 @@ def display_history():
     with st.container():  # Use a container to make the history scrollable
         for entry in st.session_state.chat_history:
             if entry['type'] == "Question":
-                st.markdown(f"<p style='font-size:16px; font-weight:bold;'>You said:</p><p style='font-size:16px;'>{entry['content']}</p>", unsafe_allow_html=True)
+                st.markdown(f"<p style='font-size:16px; font-weight:bold;'>Your Inquiry:</p><p style='font-size:16px;'>{entry['content']}</p>", unsafe_allow_html=True)
             elif entry['type'] == "Response":
                 formatted_response = entry['content'].replace("**", "<b>").replace("<b>", "</b>")
-                st.markdown(f"<p style='font-size:16px; font-weight:bold;'>Gemini replied:</p><p style='font-size:16px;'>{formatted_response}</p>", unsafe_allow_html=True)
+                st.markdown(f"<p style='font-size:16px; font-weight:bold;'>Response from Mei Mei:</p><p style='font-size:16px;'>{formatted_response}</p>", unsafe_allow_html=True)
 
 # Streamlit App setup
 st.set_page_config(page_title="Symptoms and Remedies Chatbot")
@@ -66,7 +66,7 @@ Press the **"Ask Mei Mei"** button to submit your question.
 3. **Viewing Responses**\n
 After submitting your question, the your AI assistant Mei Mei will process your input and provide a response below the input field.
 4. **Continuing the Conversation**\n
-If you have more questions to Mei Mei, simply type them into the text box and click "Ask Mei Mei" again.
+If you have more questions to Mei Mei, simply type them into the text box and click **"Ask Mei Mei"** again.
 Each new and previous conversation will be displayed in a scrollable container, allowing you to review past interactions.
 5. **Resetting the Conversation**\n
 If you wish to start over and clear all previous conversations, you can press the "Reset Conversation" button. This will clear all history and allow you to start fresh.
