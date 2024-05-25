@@ -38,7 +38,6 @@ def display_history():
             if entry['type'] == "Question":
                 st.markdown(f"<p style='font-size:16px; font-weight:bold;'>Your Inquiry:</p><p style='font-size:16px;'>{entry['content']}</p>", unsafe_allow_html=True)
             elif entry['type'] == "Response":
-                formatted_response = entry['content'].replace("**", "<b>").replace("<b>", "</b>")
                 st.markdown(f"<p style='font-size:16px; font-weight:bold;'>Response from Mei Mei:</p><p style='font-size:16px;'>{formatted_response}</p>", unsafe_allow_html=True)
 
 # Streamlit App setup
