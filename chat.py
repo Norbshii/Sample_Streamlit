@@ -74,7 +74,7 @@ If you wish to start over and clear all previous conversations, you can press th
     st.markdown(text, unsafe_allow_html=True)
 
     text = """What are some common causes of nausea and fatigue?, What are some commom remedies for nausea and headache after riding a bus?"""
-    st.markdown(text, unsafe_allow_html=True)
+    st.write(text)
 
 # Input and interaction area
 user_input = st.text_input("Enter your general health inquiry here:", key="user_query")
