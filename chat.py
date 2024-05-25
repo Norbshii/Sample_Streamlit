@@ -42,11 +42,11 @@ def display_history():
                 st.markdown(f"<p style='font-size:16px; font-weight:bold;'>Response from Mei Mei:</p><p style='font-size:16px;'>{formatted_response}</p>", unsafe_allow_html=True)
 
 # Streamlit App setup
-st.set_page_config(page_title="Symptoms and Remedies Chatbot")
-st.header("Symptom Assessment and Remedies Bot")
+st.set_page_config(page_title="SARBOT - Symptoms and Remedies Chatbot")
+st.header("SARBOT - Symptom Assessment and Remedies Bot")
 
 # Expander containing information about the creator
-with st.expander("Display info about the app"):
+with st.expander("Display info about the creator"):
     text = """Norberto Pingoy\n
     BSCS 3B AI
     CCS 229 - Intelligent Systems
@@ -55,8 +55,8 @@ with st.expander("Display info about the app"):
     West Visayas State University
     """
     st.write(text)
-with st.expander("How to use the chatbot"):
-    text = """Welcome to the Dynamic Conversation with Gemini! This chatbot is designed to provide general health information and guide you through basic inquiries about symptoms, health conditions, and wellness advice. Follow these simple steps to interact with the chatbot:
+with st.expander("How to use the SARBOT"):
+    text = """Welcome to the SARBOT - Symptoms and Remedies Chatbot, Mei Mei will be your AI friend while using this chat! This chatbot is designed to provide general health information and guide you through basic inquiries about symptoms, health conditions, and wellness advice. Follow these simple steps to interact with the chatbot:
 
 1. **Starting Up**\n
 When you first launch the application, you will see a text input field labeled "Enter your general health inquiry here:". This is where you will type your questions.\n
@@ -72,13 +72,20 @@ Each new and previous conversation will be displayed in a scrollable container, 
 If you wish to start over and clear all previous conversations, you can press the "Reset Conversation" button. This will clear all history and allow you to start fresh.
     """
     st.markdown(text, unsafe_allow_html=True)
+
+text = """What are some common causes of nausea and fatigue?, What are some commom remedies for nausea and headache after riding a bus?"""
+    st.write(text)
 # Input and interaction area
 user_input = st.text_input("Enter your general health inquiry here:", key="user_query")
 if st.button("Ask Mei Mei"):
     if user_input:
-        # Example of refining the user's query to be more general if needed
-        refined_query = f"What are some common reasons for {user_input}?"
-        response_text = handle_chat(refined_query)
+        # Check if the query already includes certain keywords
+        if 'reasons' in user_input.lower() or 'remedies' in user_input.lower():
+            response_text = handle_chat(user_input)  # Use the original user input
+        else:
+            # Refine the user's query to be more specific
+            refined_query = f"What are some common reasons/remedies for {user_input}?"
+            response_text = handle_chat(refined_query)
         display_history()
     else:
         st.warning("Please enter your query about general health information.")
