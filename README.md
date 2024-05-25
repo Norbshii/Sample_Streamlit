@@ -1,7 +1,3 @@
-To help you create a clear and comprehensive README for your GitHub repository, here's a draft that explains the setup, functionalities, and usage instructions for your Streamlit chatbot, based on the provided code snippet:
-
----
-
 # SARBOT - Symptom Assessment and Remedies Chatbot
 
 The SARBOT is a Streamlit-based chatbot designed to provide users with general health information and guide them through basic inquiries about symptoms and health conditions. It utilizes Google's Generative AI model, Gemini, to understand and respond to user queries effectively.
@@ -15,7 +11,7 @@ The SARBOT is a Streamlit-based chatbot designed to provide users with general h
 ## Project Setup
 
 ### Prerequisites
-- Python 3.8
+- Python 3.11
 - Streamlit
 - Google Generative AI access (requires API key)
 
@@ -36,7 +32,8 @@ The SARBOT is a Streamlit-based chatbot designed to provide users with general h
    ```plaintext
    GOOGLE_API_KEY='MyAPIisHiddenInTheSecrets'
    ```
-### You can also skip the installation and Directly use the streamlit application via this [Link]([https://www.youtube.com/watch?v=YrqumUkoNBY](https://sampleapp-ad7jx2ptscwwg8uspcrqia.streamlit.app/#perform-the-calculation-based-on-the-operator))
+### You can also skip the installation and Directly use the streamlit application via this [Link](https://sampleapp-ad7jx2ptscwwg8uspcrqia.streamlit.app/#perform-the-calculation-based-on-the-operator)\n
+
 ### Running the Application
 Execute the following command in the terminal:
 ```bash
@@ -51,7 +48,7 @@ streamlit run app.py
 
 ## How to Use
 
-1. **Start the Application**: Open your browser to `[Streamlit](https://sampleapp-ad7jx2ptscwwg8uspcrqia.streamlit.app/#perform-the-calculation-based-on-the-operator)`.
+1. **Start the Application**: Open your browser to `(https://sampleapp-ad7jx2ptscwwg8uspcrqia.streamlit.app/#perform-the-calculation-based-on-the-operator)`.
 2. **Enter Your Inquiry**: Use the text input field to describe your symptoms or ask health-related questions.
 3. **Interact with Mei Mei**: After submitting your inquiry, Mei Mei will process and respond. Continue the conversation by typing more questions if needed.
 4. **Reset If Necessary**: Use the 'Reset Conversation' button to clear all previous interactions.
