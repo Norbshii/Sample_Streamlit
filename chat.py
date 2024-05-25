@@ -61,8 +61,8 @@ with st.expander("How to use the SARBOT"):
 1. **Starting Up**\n
 When you first launch the application, you will see a text input field labeled "Enter your general health inquiry here:". This is where you will type your questions.\n
 2. **Entering Your Inquiry**\n
-Type your question in the text box. Try to keep your questions **"General and Focused on Symptoms or Health Conditions."** For example, instead of saying **"I feel sick,"** you could ask, "What are some common causes of nausea and fatigue?" or you can just say directly your Symptom like Headache and Dizziness.
-You can also add something like the **"Cause"** that you think might be the reason for that symptom to get a more accurate answer.
+Type your question in the text box. Try to keep your questions **"General and Focused on Symptoms or Health Conditions."**\n For example, instead of saying **"I feel sick,"** you could ask, "What are some common causes of nausea and fatigue?" or you can just say directly your symptom like Headache and Dizziness.\n
+You can also add something like the **"Cause"** that you think might be the reason for that symptom to get a more accurate answer.\n
 Press the **"Ask Mei Mei"** button to submit your question.\n
 3. **Viewing Responses**\n
 After submitting your question, the your AI assistant Mei Mei will process your input and provide a response below the input field.\n
